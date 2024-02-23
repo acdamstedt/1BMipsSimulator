@@ -1,0 +1,63 @@
+.data
+main: .asciiz "Stayed in main\n"
+beq: .asciiz "Entered beq\n"
+bne: .asciiz "Entered bne\n"
+jal: .asciiz "Entered jal\n"
+exit: .asciiz "Exiting...\n"
+
+.text
+main: 
+    0x20080000      # addi $t0, $zero, 0
+    0x20090001      # addi $t1, $zero, 1
+    0x11090001      # beq $t0, $t1, beq
+    0x20080001      # addi $t0, $zero, 1
+    0x20090001      # addi $t1, $zero, 1
+    0x15090002      # bne $t0, $t1, bne
+    0x20020004      # addi $v0, $zero, 4
+    0x20040000      # addi $a0, $zero, 0
+    0x0000000C      # syscall
+    0x0C000003      # jal jal
+    0x08000004      # j exit
+
+beq:
+    0x20020004      # addi $v0, $zero, 4
+    0x20040001      # addi $a0, $zero, 1  
+    0x0000000C      # syscall
+    0x08000004      # j exit
+    
+bne:
+    0x20020004      # addi $v0, $zero, 4
+    0x20040002      # addi $a0, $zero, 2
+    0x0000000C      # syscall
+    0x08000004      # j exit
+
+jal:
+    0x20020004      # addi $v0, $zero, 4
+    0x20040003      # addi $a0, $zero, 3
+    0x0000000C      # syscall
+    0x03E00008      # jr $ra
+
+
+exit:
+    0x20020004      # addi $v0, $zero, 4
+    0x20040004      # addi $a0, $zero, 4 
+    0x0000000C      # syscall
+    0x2402000A      # addiu $v0, $zero, 10
+    0x0000000C      # syscall
+
+junk:
+#   0x01095020      # add $t2, $t0, $t1
+#   0x01095021      # addu $t2, $t0, $t1
+#   0x01095024      # and $t2, $t0, $t1
+#   0x01095027      # nor $t2, $t0, $t1
+#   0x01095025      # or $t2, $t0, $t1
+#   0x0109502A      # slt $t2, $t0, $t1
+#   0x0109502B      # sltu $t2, $t0, $t1
+#   0x00085080      # sll $t2, $t0, 2
+#   0x00095082      # srl $t2, $t1, 2
+#   0x01095022      # sub $t2, $t0, $t1
+#   0x01095023      # subu $t2, $t0, $t1
+#   0x3C0A0001      # lui $t2, 1
+#   0x354B0001      # ori $t3, $t2, 1
+#   0x290B000A      # slti $t3, $t0, 10
+#   0x2D0B000A      # sltiu $t3, $t0, 10
